@@ -8,7 +8,7 @@
 #' do.call(rbind.data.frame, .)
 create_client <- function() {
   gender <- sample(c("male", "female"), 1, prob = c(.4, .6))
-  tibble::tibble(client_id = paste0(sample(0:9, 12), collapse = ""),
+  tibble::tibble(client_id = paste0(sample(0:9, 12, replace = TRUE), collapse = ""),
          first_name = randomNames::randomNames(1,
                                                gender = ifelse(gender == "male", 0, 1),
                                                which.names = "first"),
@@ -40,7 +40,7 @@ create_contact <-  function(client_id) {
   dist <- dist/sum(dist)
 
   tibble(client_id = client_id,
-         contact_id = paste0(sample(0:9, 12), collapse = ""),
+         contact_id = paste0(sample(0:9, 12, replace = TRUE), collapse = ""),
          contact_date = wakefield::date_stamp(1, start = Sys.Date() - lubridate::dmonths(24)),
          contact_time = wakefield::time_stamp(1, x = seq(7, 22, by = 5/60), prob = dist),
          hours_use = rpois(1, 0.2),
